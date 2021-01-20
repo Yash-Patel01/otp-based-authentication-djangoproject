@@ -4,21 +4,32 @@
 <div class="container">
     <div class="row pt-5">
         <div class="col-md-6 offset-md-3">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
             <form method="POST">
                 <legend class="">LOGIN</legend>
                 {% csrf_token %}
                 <div class="form-group">
-                    <label>Phone number*</label>
-                    <input type="text" class="form-control" name="username" required>
+                    <input type="hidden" class="form-control" value="{{ phone_number }}" name="phone_number">
                 </div>
                 <div class="form-group">
                     <label>OTP*</label>
                     <input type="text" class="form-control" name="otp" required>
                 </div>
+                {% if is_attempts_left %}
                 <div>
                     <button class="btn btn-dark btn-block" type="submit">Log in</button>
                 </div>
-
+                {% else %}
+                <div>
+                    <button class="btn btn-dark btn-block" type="submit" disabled>Log in</button>
+                </div>
+                {% endif %}
             </form>
         </div>
     </div>
