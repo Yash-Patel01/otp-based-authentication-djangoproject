@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User, LoginAttempts
+from .models import User, LoginAttempts, OneTimePassword
 from .forms import UserRegisterForm
 import random
 import math
@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.utils import timezone
 import datetime
+from django.contrib.auth.decorators import login_required
 
 
 def generate_otp():
@@ -62,8 +63,8 @@ def generate_otp_view(request):
             return redirect('login')
         else:
             new_otp = generate_otp()
-            print(new_otp)
-            User.objects.filter(phone_number=phone_number).update(otp=new_otp)
+            print(f'OTP: {new_otp}')
+            OneTimePassword.objects.filter(user=user).update(otp=new_otp)
             messages.success(request, 'OTP sent successfully.')
             return redirect(f'/log_in/?phone_number={phone_number}')
     return render(request, 'user/login.html')
@@ -93,5 +94,10 @@ def login_view(request, **kwargs):
                 login_attempts.attempts_count = 0
                 login_attempts.can_login_after = timezone.now()
                 login_attempts.save()
-                return redirect('/')
+                return redirect('profile')
     return render(request, 'user/log_in.html', {'phone_number': phone_number, 'is_attempts_left': is_attempts_left})
+
+
+@login_required
+def profile(request):
+    return render(request, 'user/profile.html')

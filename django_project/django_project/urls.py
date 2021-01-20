@@ -24,5 +24,6 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('login/', views.generate_otp_view, name='login'),
     path('log_in/', views.login_view, name='log_in'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout')
+    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('profile/', views.profile, name='profile'),
 ]

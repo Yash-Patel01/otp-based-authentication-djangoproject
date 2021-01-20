@@ -1,0 +1,13 @@
+{% extends 'user/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+<div class="row mt-5">
+    <div class="col-sm-1"><img src="{{ user.profile.profile_picture.url }}" class="rounded-circle img-fluid"></div>
+    <div class="col-sm-7">
+        <h3>{{ user.username }}</h3>
+        <p><i class="fas fa-user"></i> {{ user.first_name }} {{ user.last_name }}<br><i class="fas fa-envelope"></i> {{ user.email }}<br><i class="fas fa-mobile-alt"></i> {{ user.phone_number }}</p>
+    </div>
+</div>
+</div>
+{% endblock %}
