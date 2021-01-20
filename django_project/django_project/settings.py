@@ -102,6 +102,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+    # 'django.contrib.auth.backends.ModelBackend',
+    'user.backends.CustomBackend',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -125,3 +130,6 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'user.User'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
